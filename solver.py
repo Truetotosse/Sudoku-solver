@@ -156,6 +156,8 @@ class table(pygame.sprite.Sprite):
         self.image.blit(text, (20,460))
         text = fnt.render(('backspace to exit'), 1, (0, 0, 0))
         self.image.blit(text, (20,490))
+        text = fnt.render(('L and R arrows for new sudoku'), 1, (0, 0, 0))
+        self.image.blit(text, (20,520))
         #saving previous render to compare
         self.oldstyle=deepcopy(cstate)
 
@@ -331,6 +333,8 @@ def assumpt(a,n,m,deep):
                             if deep==0:
                                 for i in range(9):
                                     print(cstate[i])
+                            global started
+                            started=0
                             return assumption
                              
                 if flag==1:
@@ -375,7 +379,139 @@ def assumpt(a,n,m,deep):
     
 
 #easy sudoky, solvable by chain reaction only
-a=[
+a=[[
+[0, 0, 0, 0, 1, 0, 6, 0, 0] ,
+[0, 0, 7, 0, 9, 5, 0, 0, 4] ,
+[4, 5, 0, 6, 0, 0, 0, 3, 2] ,
+[3, 0, 0, 0, 0, 0, 0, 5, 9] ,
+[0, 0, 6, 0, 0, 8, 0, 0, 1] ,
+[0, 9, 0, 2, 7, 3, 0, 8, 0] ,
+[2, 0, 0, 0, 4, 0, 1, 6, 3] ,
+[0, 0, 4, 8, 0, 0, 0, 9, 0] ,
+[9, 1, 3, 7, 0, 0, 5, 0, 0] 
+],
+[
+[0, 1, 5, 0, 0, 8, 0, 6, 2] ,
+[4, 0, 2, 0, 0, 0, 9, 0, 5] ,
+[0, 7, 0, 0, 0, 3, 0, 0, 0] ,
+[1, 0, 0, 0, 9, 0, 0, 0, 0] ,
+[0, 0, 0, 0, 0, 5, 6, 8, 9] ,
+[0, 3, 8, 0, 6, 0, 0, 0, 7] ,
+[0, 9, 0, 0, 8, 6, 5, 7, 1] ,
+[5, 6, 0, 1, 0, 2, 4, 0, 0] ,
+[0, 0, 0, 7, 0, 0, 3, 0, 0] 
+],
+[
+[6, 0, 0, 0, 0, 9, 3, 0, 5] ,
+[0, 0, 0, 0, 7, 4, 1, 8, 0] ,
+[0, 8, 0, 0, 0, 0, 0, 9, 2] ,
+[1, 4, 0, 2, 0, 0, 0, 7, 0] ,
+[2, 5, 0, 6, 8, 0, 0, 0, 0] ,
+[0, 9, 6, 4, 0, 3, 0, 0, 0] ,
+[3, 0, 0, 0, 0, 0, 0, 0, 1] ,
+[8, 7, 0, 3, 0, 0, 5, 0, 9] ,
+[4, 2, 5, 0, 6, 0, 0, 0, 0] 
+],
+[
+[4, 1, 0, 6, 3, 0, 0, 0, 5] ,
+[9, 0, 0, 2, 0, 0, 0, 0, 3] ,
+[7, 0, 0, 0, 0, 1, 2, 0, 0] ,
+[2, 4, 0, 3, 9, 0, 0, 6, 0] ,
+[0, 0, 1, 0, 0, 7, 0, 0, 9] ,
+[0, 0, 6, 0, 0, 2, 5, 0, 7] ,
+[0, 0, 0, 0, 0, 6, 8, 0, 0] ,
+[0, 0, 9, 4, 0, 0, 7, 0, 6] ,
+[0, 5, 8, 0, 0, 0, 0, 4, 1] 
+],
+[
+[0, 0, 0, 0, 0, 0, 0, 6, 8] ,
+[0, 0, 2, 3, 0, 0, 0, 4, 9] ,
+[5, 9, 7, 0, 0, 6, 0, 0, 0] ,
+[9, 4, 5, 0, 8, 0, 0, 1, 0] ,
+[1, 0, 0, 0, 2, 0, 8, 5, 0] ,
+[0, 3, 0, 0, 0, 7, 0, 0, 0] ,
+[3, 0, 1, 2, 0, 0, 0, 7, 4] ,
+[0, 6, 0, 0, 0, 0, 0, 0, 2] ,
+[8, 0, 0, 1, 7, 4, 0, 0, 0] 
+],
+[
+[1, 3, 6, 8, 0, 0, 0, 0, 0] ,
+[0, 8, 0, 2, 4, 6, 0, 0, 0] ,
+[0, 0, 0, 0, 0, 9, 5, 0, 0] ,
+[0, 9, 0, 0, 7, 0, 0, 0, 0] ,
+[0, 0, 0, 0, 6, 0, 3, 2, 4] ,
+[5, 0, 0, 1, 0, 2, 9, 0, 6] ,
+[0, 0, 4, 0, 0, 0, 0, 1, 3] ,
+[0, 0, 8, 7, 2, 0, 0, 0, 5] ,
+[7, 0, 0, 5, 0, 1, 4, 0, 2] 
+],
+[
+[0, 0, 6, 0, 5, 8, 0, 0, 0] ,
+[0, 0, 0, 0, 0, 0, 3, 5, 7] ,
+[9, 7, 0, 3, 1, 4, 0, 6, 0] ,
+[0, 0, 1, 0, 4, 0, 5, 0, 2] ,
+[6, 0, 0, 9, 0, 0, 0, 8, 4] ,
+[5, 0, 8, 0, 3, 0, 9, 0, 0] ,
+[4, 8, 0, 0, 9, 1, 0, 0, 0] ,
+[3, 0, 2, 0, 6, 0, 0, 0, 9] ,
+[0, 0, 0, 2, 0, 0, 7, 0, 0] 
+],
+[
+[0, 7, 3, 5, 2, 0, 0, 9, 0] ,
+[0, 0, 5, 0, 1, 4, 0, 0, 3] ,
+[0, 2, 0, 0, 0, 7, 8, 0, 0] ,
+[0, 4, 0, 0, 3, 1, 7, 5, 0] ,
+[0, 0, 0, 2, 0, 0, 6, 0, 1] ,
+[0, 0, 6, 0, 0, 9, 0, 2, 8] ,
+[6, 1, 0, 0, 5, 0, 0, 0, 2] ,
+[5, 0, 0, 0, 0, 0, 9, 3, 0] ,
+[7, 0, 0, 9, 0, 8, 0, 0, 6] 
+],
+[
+[5, 0, 0, 4, 9, 0, 0, 3, 0] ,
+[0, 0, 4, 0, 5, 0, 0, 0, 8] ,
+[3, 0, 7, 0, 0, 0, 0, 0, 6] ,
+[0, 0, 1, 0, 2, 0, 8, 0, 7] ,
+[7, 0, 9, 3, 0, 1, 0, 0, 2] ,
+[0, 6, 0, 8, 0, 0, 4, 1, 0] ,
+[1, 7, 6, 0, 3, 0, 0, 8, 0] ,
+[9, 5, 0, 0, 0, 7, 0, 6, 0] ,
+[0, 0, 0, 0, 0, 2, 1, 0, 5] 
+],
+[
+[0, 0, 7, 9, 0, 0, 0, 0, 2] ,
+[6, 8, 0, 0, 7, 0, 0, 3, 1] ,
+[0, 4, 0, 0, 1, 2, 0, 0, 5] ,
+[7, 0, 1, 0, 0, 0, 2, 0, 0] ,
+[2, 0, 0, 0, 6, 1, 0, 4, 0] ,
+[0, 3, 0, 8, 0, 0, 0, 9, 0] ,
+[9, 0, 0, 0, 0, 0, 7, 8, 0] ,
+[0, 0, 6, 0, 0, 3, 0, 0, 9] ,
+[8, 1, 5, 0, 0, 4, 6, 0, 0] 
+],
+[
+[0, 0, 0, 1, 0, 8, 0, 0, 0] ,
+[0, 5, 0, 2, 4, 3, 6, 0, 9] ,
+[4, 1, 0, 0, 0, 0, 0, 7, 0] ,
+[0, 0, 0, 8, 0, 6, 3, 0, 0] ,
+[8, 0, 9, 0, 0, 0, 0, 0, 5] ,
+[3, 4, 6, 0, 0, 7, 9, 0, 0] ,
+[0, 3, 7, 0, 5, 9, 0, 2, 8] ,
+[0, 0, 1, 0, 0, 0, 4, 0, 0] ,
+[2, 0, 0, 6, 0, 0, 0, 5, 3] 
+],
+[
+[0, 7, 8, 9, 0, 0, 0, 3, 5] ,
+[0, 0, 6, 0, 0, 0, 0, 0, 0] ,
+[0, 9, 0, 0, 7, 3, 2, 0, 0] ,
+[0, 0, 3, 0, 1, 0, 9, 8, 0] ,
+[6, 0, 2, 4, 9, 0, 7, 0, 0] ,
+[0, 1, 0, 0, 0, 6, 0, 0, 0] ,
+[2, 0, 0, 5, 3, 0, 0, 9, 0] ,
+[8, 0, 7, 1, 4, 0, 0, 0, 2] ,
+[0, 0, 4, 0, 0, 2, 0, 5, 1] 
+],
+[
 [5,3,0,0,7,0,0,0,0],
 [6,0,0,1,9,5,0,0,0],
 [0,9,8,0,0,0,0,6,0],
@@ -384,10 +520,9 @@ a=[
 [7,0,0,0,2,0,0,0,6],
 [0,6,0,0,0,0,2,8,0],
 [0,0,0,4,1,9,0,0,5],
-[0,0,0,0,8,0,0,7,9] ]
-
-#hard sudoku, solvable with assumptions
-a1=[
+[0,0,0,0,8,0,0,7,9] 
+],
+[
 [8,0,0,0,0,0,0,0,0],
 [0,0,3,6,0,0,0,0,0],
 [0,7,0,0,9,0,2,0,0],
@@ -396,8 +531,10 @@ a1=[
 [0,0,0,1,0,0,0,3,0],
 [0,0,1,0,0,0,0,6,8],
 [0,0,8,5,0,0,0,1,0],
-[0,9,0,0,0,0,4,0,0] ]
-
+[0,9,0,0,0,0,4,0,0] 
+]
+]
+currentsudoku=len(a)-1
 #dummy 9x9 lists
 b=[
 [5,3,0,0,7,0,0,0,0],
@@ -421,23 +558,17 @@ b1=[
 [0,0,0,4,1,9,0,0,5],
 [0,0,0,0,8,0,0,7,9] ]
 
-#converting sudoku to "possibilities" format
-for i in range(9):
-    for j in range(9):
-        if a1[i][j]==0:
-            b[i][j]='123456789'
-        else:
-            b[i][j]=str(a1[i][j])
+
 
 #saving it for the render
 cstate=deepcopy(b)
 #converting sudoku to "possibilities" format
 for i in range(9):
     for j in range(9):
-        if a[i][j]==0:
-            b1[i][j]='123456789'
+        if a[currentsudoku][i][j]==0:
+            b[i][j]='123456789'
         else:
-            b1[i][j]=str(a[i][j])
+            b[i][j]=str(a[currentsudoku][i][j])
 
 #rendering window
 pygame.init()
@@ -453,20 +584,12 @@ running = True
 
 
 
-#solving easy sudoku by chain reaction only
-for i in range(9):
-    for j in range(9):
-        sudobomber(b1,i,j)
-for i in range(9):
-    print(b1[i])
+
 
 #algoritm effectivness check
 #t1_start = time.perf_counter()
 
-#solving hard sudoku by chain reaction only
-for i in range(9):
-    for j in range(9):
-        sudobomber(b,i,j)
+
 
 #saving it for the render        
 cstate=deepcopy(b)
@@ -499,13 +622,17 @@ started=0
 
 while running:
     # low fps so can see some steps
-    clock.tick(2)
+    clock.tick(10)
 
     for event in pygame.event.get():
         # check for closing window
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            for i in range(9):
+                for j in range(9):
+                    sudobomber(b,i,j)
+            cstate=deepcopy(b)
             for i in range(9):
                 for j in range(9):
                     if len(b[i][j])==2:
@@ -518,6 +645,31 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
             #backspace for exit
             running = False
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            if started==0:
+                currentsudoku+=1
+                if currentsudoku>=len(a):
+                    currentsudoku=0
+                for i in range(9):
+                    for j in range(9):
+                        if a[currentsudoku][i][j]==0:
+                            b[i][j]='123456789'
+                        else:
+                            b[i][j]=str(a[currentsudoku][i][j])
+                cstate=deepcopy(b)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            if started==0:
+                currentsudoku-=1
+                if currentsudoku<0:
+                    currentsudoku=len(a)-1
+                for i in range(9):
+                    for j in range(9):
+                        if a[currentsudoku][i][j]==0:
+                            b[i][j]='123456789'
+                        else:
+                            b[i][j]=str(a[currentsudoku][i][j])
+                cstate=deepcopy(b)
+
 
             
        
